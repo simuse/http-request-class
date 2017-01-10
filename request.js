@@ -78,10 +78,14 @@ class Request {
         xhr.open(method, url, true);
 
         // set header
+        // xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+        // xhr.withCredentials = false;
+
         if (method === 'POST') xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 
         xhr.onload = () => {
             if (xhr.readyState === XMLHttpRequest.DONE ) {
+                console.log('done');
                 if (xhr.status === 200) {
                     _this._debug('✔ GET success', [method, url, xhr]);
                     resolve(_this._parseResponseData(xhr.response));
@@ -121,6 +125,7 @@ class Request {
 
     /**
      * Transform response data from JSON/XML to object
+     * TODO: support XML
      *
      * @param {Object} responseData
      */
